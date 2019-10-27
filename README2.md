@@ -26,3 +26,7 @@ Data Source (from kaggle): https://www.kaggle.com/aungpyaeap/supermarket-sales
 - **Gross margin percentage:** Gross margin percentage
 - **Gross income:** Gross income
 - **Rating:** Customer stratification rating on their overall shopping experience (On a scale of 1 to 10)
+
+## Question of interest
+Our goal is to predict of the quantity of the items sold per branch in each day.
+

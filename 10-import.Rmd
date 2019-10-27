@@ -1,0 +1,111 @@
+---
+title: "10-import"
+output: html_notebook
+---
+
+# Goal
+
+We want to predict the quantity of the items sold per branch in each day. 
+
+*hint: If you want to see more information of the dataset, please go to README2.*
+
+
+# Read in and check the data
+
+a. load libraries
+```{r load library}
+library(readr)
+library(tidyverse)
+library(lubridate) # date
+library(janitor) # clean_names
+library(assertr) # assert
+```
+
+
+b. import dataset
+
+```{r import data}
+supermarket <- read_csv("supermarket_sales.csv")
+```
+
+
+c. clean names
+
+we use `clean_names()` to clean the volumn names.
+
+```{r clean_names}
+supermarket <- clean_names(supermarket)
+names(supermarket)
+```
+
+
+d. dimension and the structures
+
+Checking the structures of the data, we find that the dataset has 1000 observations and 17 attributes.
+```{r Check the dimensions and the structures}
+dim(supermarket)
+str(supermarket)
+```
+
+
+e. check NA
+
+```{r Check NA}
+supermarket %>% 
+  verify(not_na(.))
+
+```
+There is no NA in the dataset.
+
+
+f. Assert 
+
+Before we start doing data exploration and feature engineering, we need to check whether there exists abnormal values in each variable. Thus we use `assert()` function to detect the abnormalities.
+
+(1)  We want to check whether invoice_id is unique. The result shows that it is.
+```{r assert id}
+supermarket %>%
+  assert(is_uniq, invoice_id)
+```
+
+
+(2) We want to check the following categorical variables.
+```{r assert categorical variables}
+supermarket %>%
+  assert(in_set("A", "B", "C"), branch) %>%  # check whether the dataset contains only three branch
+  assert(in_set("Female", "Male"), gender) %>%  # check whether the gender only include male and female
+  assert(in_set("Ewallet", "Cash", "Credit card"), payment) # check whether there are more than three types of payment methods which are listed above
+```
+The dataset looks good!
+
+
+(3) we want to check the following numerical variables to see if they are in the prospected ranges.
+```{r assert numerical variables}
+supermarket %>%
+  assert(within_bounds(1, 10), rating) %>%  # check the ratings that is assumed to be in 1 to 10.
+  assert(within_bounds(0, max(supermarket$unit_price)), unit_price) %>%  # check the unit_price to see whether it is larger than 0.
+  assert(within_bounds(0, 100), gross_margin_percentage) # check the gross_margin_percentage to see whether it ranges from 0 to 100.
+```
+
+The results show that there is no abnormal value in the dataset.
+
+
+# Clean up the data
+
+After checking the data, we found that the dataset is almost clean. Now we can do some changes for the type of the variables.
+
+For "date" variable, we know that it is supposed to be Date type instead of char. So we use `mdy()` to make this change.
+
+```{r change the types of date variables}
+supermarket$date <- mdy(supermarket$date)
+str(supermarket$date)
+```
+
+I think the customer type is a good predictor, but naming the values into "0" and "1" will be better for modelling. Thus, I will recode the value for this variable, "1" equals to "Member" and "0" equals to "Normal".
+
+```{r}
+supermarket %>%
+  mutate(customer_type = ifelse(customer_type == "Member", 1, 0))
+```
+
+Now the data looks more clean. Now we can start playing with data!

@@ -1,0 +1,20 @@
+---
+title: "40-modeling"
+output: html_notebook
+---
+
+## Preparing for Modeling
+
+Now we add all the features together to the dataset. The new dataset which contains all the new attributes `sup_new_feature` is created.
+
+```{r add features to the dataset}
+sup_new_feature <- supermarket %>% 
+  month_detail(date, time) %>% 
+  gross_item() %>%
+  total_quant_day() %>% 
+  price_level()
+  
+head(sup_new_feature)
+
+```
+

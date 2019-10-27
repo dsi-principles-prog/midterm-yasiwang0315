@@ -1,0 +1,80 @@
+---
+title: "30-feature-engineering"
+output: html_notebook
+---
+ 
+# Goal
+
+Our goal is to predict the quantity of the items sold per branch in each day. In order to better predict the order quantity, we need to do some feature engineering.
+
+# Feature engineering
+
+a. month, day, hour
+
+In order to get month's and day's information, I want to use `month()`, `day()`, and `hour()` functions to extract the sale's month, day, and hour. Also, after extracting these variables, we need to use `assert()` functions to test if there exists any abnormal value.
+
+```{r month, day, hour}
+
+
+```
+
+
+b. gross margins per item
+
+I think that gross income per item is a good index to predict the item quantities. Thus, I want to create a new variable called gross_income_per_item to reflect this information.
+
+```{r gross_income_per_item}
+
+
+```
+
+
+
+c. total items' quantity per day
+
+In this step, I created the total quantities of the items per day in different branches. This is what I want to predict.
+
+```{r total_quantity_per_day}
+total_quant_day <- function(df) {
+  if (!all(c("quantity", "date", "branch") %in% names(df))) {
+    stop("data must contain 'quantity', 'date' and 'branch")
+  }
+  df <- df %>% 
+    group_by(date, branch) %>% 
+    mutate(total_quantity_per_day = sum(quantity)) %>%
+    arrange(date, branch) %>% 
+    ungroup()
+}
+
+supermarket %>% 
+  total_quant_day() %>% 
+  select(total_quantity_per_day,date, branch, everything()) %>% 
+  assert(within_bounds(1, 200), total_quantity_per_day)
+
+```
+
+The total quantities of each branches' items are within 200.
+
+
+d. unit price level
+
+I divided the unit price into three levels and created the new variable called unit_price_level. If the unit price is smaller than 35 dollars, the level is low, and if the unit price is between 35 dollars and 70 dollars, it belongs to middle level, and higher than 70 belongs to high level. I want to see the effect of this new variable on the quantities.
+
+```{r unit_price_level}
+price_level <- function(df) {
+    if (!"unit_price" %in% names(df)) {
+    stop("data must contain 'unit_price'")
+  }
+  df <- df %>% 
+    mutate(unit_price_level = case_when(unit_price <= 35 ~ "low",
+                     unit_price <= 70 ~ "mid",
+                     TRUE ~ "high"))
+}
+
+supermarket %>% 
+  price_level() %>% 
+  select(unit_price_level, unit_price, branch, everything()) %>% 
+  assert(in_set("low", "mid", "high"), unit_price_level)
+```
+
+
