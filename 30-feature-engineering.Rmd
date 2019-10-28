@@ -9,30 +9,9 @@ Our goal is to predict the quantity of the items sold per branch in each day. In
 
 # Feature engineering
 
-a. month, day, hour
+a. total items' quantity per day
 
-In order to get month's and day's information, I want to use `month()`, `day()`, and `hour()` functions to extract the sale's month, day, and hour. Also, after extracting these variables, we need to use `assert()` functions to test if there exists any abnormal value.
-
-```{r month, day, hour}
-
-
-```
-
-
-b. gross margins per item
-
-I think that gross income per item is a good index to predict the item quantities. Thus, I want to create a new variable called gross_income_per_item to reflect this information.
-
-```{r gross_income_per_item}
-
-
-```
-
-
-
-c. total items' quantity per day
-
-In this step, I created the total quantities of the items per day in different branches. This is what I want to predict.
+In this step, I created the total quantities of the items per day in different branches. This variable is what I want to predict.
 
 ```{r total_quantity_per_day}
 total_quant_day <- function(df) {
@@ -43,7 +22,8 @@ total_quant_day <- function(df) {
     group_by(date, branch) %>% 
     mutate(total_quantity_per_day = sum(quantity)) %>%
     arrange(date, branch) %>% 
-    ungroup()
+    ungroup() %>% 
+    select(total_quantity_per_day, everything())
 }
 
 supermarket %>% 
@@ -54,6 +34,35 @@ supermarket %>%
 ```
 
 The total quantities of each branches' items are within 200.
+
+
+b. month, day, hour
+
+In order to get month's and day's information, I want to use `month()`, `day()`, and `hour()` functions to extract the sale's month, day, and hour. In order to better analyze data, we can recode the  `month` variable as 1, 2, 3, which represents January, February and March, respectively. But it doesn't mean that this variable becomes numeric, it is still categorical.
+
+Also, after extracting these variables, we need to use `assert()` functions to test if there exists any abnormal value.
+
+- `month` variable should be set in 1, 2, 3.
+- `day` variable should be set in 1 to 31.
+- `hour` variable should be set in 0 to 24.
+
+```{r month, day, hour}
+
+
+```
+
+
+c. gross margins per item
+
+I think that gross income per item is a good index to predict the item quantities. Thus, I want to create a new variable called gross_income_per_item to reflect this information. It can be caculated by: total gross income / quantity.
+
+Doing the `assert()` function, we need to test whether new variables (numeric) are within 100.
+
+```{r gross_income_per_item}
+
+
+```
+
 
 
 d. unit price level

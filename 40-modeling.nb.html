@@ -232,22 +232,24 @@ summary {
 <p>Now we add all the features together to the dataset. The new dataset which contains all the new attributes <code>sup_new_feature</code> is created.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwX25ld19mZWF0dXJlIDwtIHN1cGVybWFya2V0ICU+JSBcbiAgbW9udGhfZGV0YWlsKGRhdGUsIHRpbWUpICU+JSBcbiAgZ3Jvc3NfaXRlbSgpICU+JVxuICB0b3RhbF9xdWFudF9kYXkoKSAlPiUgXG4gIHByaWNlX2xldmVsKClcbiAgXG5oZWFkKHN1cF9uZXdfZmVhdHVyZSlcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwX25ld19mZWF0dXJlIDwtIHN1cGVybWFya2V0ICU+JSBcbiAgdG90YWxfcXVhbnRfZGF5KCkgJT4lXG4gIyBtb250aF9kZXRhaWwoZGF0ZSwgdGltZSkgJT4lIFxuICMgZ3Jvc3NfaXRlbSgpICU+JVxuICBwcmljZV9sZXZlbCgpICU+JSBcbiAgc2VsZWN0KHRvdGFsX3F1YW50aXR5X3Blcl9kYXksIG1vbnRoLCBkYXksIGdyb3NzX2luY29tZV9wZXJfaXRlbe+8jCB1bml0X3ByaWNlX2xldmVsLCByYXRpbmcsIGV2ZXJ5dGhpbmcoKSlcbmBgYCJ9 -->
 <pre class="r"><code>sup_new_feature &lt;- supermarket %&gt;% 
-  month_detail(date, time) %&gt;% 
-  gross_item() %&gt;%
-  total_quant_day() %&gt;% 
-  price_level()
-  
-head(sup_new_feature)
-</code></pre>
+  total_quant_day() %&gt;%
+ # month_detail(date, time) %&gt;% 
+ # gross_item() %&gt;%
+  price_level() %&gt;% 
+  select(total_quantity_per_day, month, day, gross_income_per_itemï¼ unit_price_level, rating, everything())</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gLmYoLnhbW2ldXSwgLi4uKSA6IG9iamVjdCAnZ3Jvc3NfaW5jb21lX3Blcl9pdGVtJyBub3QgZm91bmRcbiJ9 -->
+<pre><code>Error in .f(.x[[i]], ...) : object 'gross_income_per_item' not found</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+<p>Future work</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIjQwLW1vZGVsaW5nIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyMgUHJlcGFyaW5nIGZvciBNb2RlbGluZw0KDQpOb3cgd2UgYWRkIGFsbCB0aGUgZmVhdHVyZXMgdG9nZXRoZXIgdG8gdGhlIGRhdGFzZXQuIFRoZSBuZXcgZGF0YXNldCB3aGljaCBjb250YWlucyBhbGwgdGhlIG5ldyBhdHRyaWJ1dGVzIGBzdXBfbmV3X2ZlYXR1cmVgIGlzIGNyZWF0ZWQuDQoNCmBgYHtyIGFkZCBmZWF0dXJlcyB0byB0aGUgZGF0YXNldH0NCnN1cF9uZXdfZmVhdHVyZSA8LSBzdXBlcm1hcmtldCAlPiUgDQogIG1vbnRoX2RldGFpbChkYXRlLCB0aW1lKSAlPiUgDQogIGdyb3NzX2l0ZW0oKSAlPiUNCiAgdG90YWxfcXVhbnRfZGF5KCkgJT4lIA0KICBwcmljZV9sZXZlbCgpDQogIA0KaGVhZChzdXBfbmV3X2ZlYXR1cmUpDQoNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIjQwLW1vZGVsaW5nIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyMgUHJlcGFyaW5nIGZvciBNb2RlbGluZw0KDQpOb3cgd2UgYWRkIGFsbCB0aGUgZmVhdHVyZXMgdG9nZXRoZXIgdG8gdGhlIGRhdGFzZXQuIFRoZSBuZXcgZGF0YXNldCB3aGljaCBjb250YWlucyBhbGwgdGhlIG5ldyBhdHRyaWJ1dGVzIGBzdXBfbmV3X2ZlYXR1cmVgIGlzIGNyZWF0ZWQuDQoNCmBgYHtyIGFkZCBmZWF0dXJlcyB0byB0aGUgZGF0YXNldH0NCnN1cF9uZXdfZmVhdHVyZSA8LSBzdXBlcm1hcmtldCAlPiUgDQogIHRvdGFsX3F1YW50X2RheSgpICU+JQ0KICMgbW9udGhfZGV0YWlsKGRhdGUsIHRpbWUpICU+JSANCiAjIGdyb3NzX2l0ZW0oKSAlPiUNCiAgcHJpY2VfbGV2ZWwoKSAlPiUgDQogIHNlbGVjdCh0b3RhbF9xdWFudGl0eV9wZXJfZGF5LCBtb250aCwgZGF5LCBncm9zc19pbmNvbWVfcGVyX2l0ZW0sIHVuaXRfcHJpY2VfbGV2ZWwsIHJhdGluZywgZXZlcnl0aGluZygpKQ0KDQp3cml0ZS5jc3Yoc3VwX25ld19mZWF0dXJlLCJzdXBfbmV3X2ZlYXR1cmUuY3N2IikNCg0KaGVhZChzdXBfbmV3X2ZlYXR1cmUpDQoNCmBgYA0KDQpGdXR1cmUgd29yaw==</div>
 
 
 

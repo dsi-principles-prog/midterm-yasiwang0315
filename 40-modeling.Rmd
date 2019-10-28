@@ -9,12 +9,16 @@ Now we add all the features together to the dataset. The new dataset which conta
 
 ```{r add features to the dataset}
 sup_new_feature <- supermarket %>% 
-  month_detail(date, time) %>% 
-  gross_item() %>%
-  total_quant_day() %>% 
-  price_level()
-  
+  total_quant_day() %>%
+ # month_detail(date, time) %>% 
+ # gross_item() %>%
+  price_level() %>% 
+  select(total_quantity_per_day, month, day, gross_income_per_item, unit_price_level, rating, everything())
+
+write.csv(sup_new_feature,"sup_new_feature.csv")
+
 head(sup_new_feature)
 
 ```
 
+Future work

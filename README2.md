@@ -1,7 +1,7 @@
 # Supermarket sales data
 
 ## About the data
-The dataset recorded the historical sales of a supermarket company with 3 different branches (3 different cities) for 3 months. Each row represents one purchase, and each column represents one attribute.
+The dataset recorded the historical sales of a supermarket company with 3 different branches (3 different cities) for 3 months (from January 1st to March 30th). Each row represents one purchase, and each column represents one attribute.
 
 Data Source (from kaggle): https://www.kaggle.com/aungpyaeap/supermarket-sales
 
@@ -24,7 +24,6 @@ Data Source (from kaggle): https://www.kaggle.com/aungpyaeap/supermarket-sales
 - **Gross margin percentage:** Gross margin percentage
 - **Gross income:** Gross income
 - **Rating:** Customer stratification rating on their overall shopping experience (On a scale of 1 to 10)
-<<<<<<< HEAD
 
 ## Question of interest
 Our goal is to predict of the quantity of the items sold per branch in each day.
