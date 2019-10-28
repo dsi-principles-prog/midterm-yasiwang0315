@@ -36,7 +36,7 @@ supermarket %>%
 The total quantities of each branches' items are within 200.
 
 
-b. month, day, hour
+b. month, day, hour (`month_detail` function)
 
 We think that the date is important to predict the quantities of the items sold per day. Sales may be better in the early days of the month because people get their salaries during that days.
 
@@ -54,11 +54,11 @@ Also, after extracting these variables, we need to use `assert()` functions to t
 ```
 
 
-c. gross margins per item
+c. gross margins per item (`gross_item` function)
 
 I think that gross income per item is a good index to predict the item quantities. If the gross income per item is high, people may feel that the product is not cost-effective so that the quantities sold per day will be low.
 
-Thus, I want to create a new variable called gross_income_per_item to reflect this information. It can be caculated by: total gross income / quantity.
+Thus, I want to create a new variable called gross_income_per_item to reflect this information. It can be calculated by: total gross income / quantity.
 
 Doing the `assert()` function, we need to test whether new variables (numeric) are within 100.
 
