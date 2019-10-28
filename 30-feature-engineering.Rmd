@@ -38,6 +38,8 @@ The total quantities of each branches' items are within 200.
 
 b. month, day, hour
 
+We think that the date is important to predict the quantities of the items sold per day. Sales may be better in the early days of the month because people get their salaries during that days.
+
 In order to get month's and day's information, I want to use `month()`, `day()`, and `hour()` functions to extract the sale's month, day, and hour. In order to better analyze data, we can recode the  `month` variable as 1, 2, 3, which represents January, February and March, respectively. But it doesn't mean that this variable becomes numeric, it is still categorical.
 
 Also, after extracting these variables, we need to use `assert()` functions to test if there exists any abnormal value.
@@ -54,7 +56,9 @@ Also, after extracting these variables, we need to use `assert()` functions to t
 
 c. gross margins per item
 
-I think that gross income per item is a good index to predict the item quantities. Thus, I want to create a new variable called gross_income_per_item to reflect this information. It can be caculated by: total gross income / quantity.
+I think that gross income per item is a good index to predict the item quantities. If the gross income per item is high, people may feel that the product is not cost-effective so that the quantities sold per day will be low.
+
+Thus, I want to create a new variable called gross_income_per_item to reflect this information. It can be caculated by: total gross income / quantity.
 
 Doing the `assert()` function, we need to test whether new variables (numeric) are within 100.
 
@@ -67,7 +71,8 @@ Doing the `assert()` function, we need to test whether new variables (numeric) a
 
 d. unit price level
 
-I divided the unit price into three levels and created the new variable called unit_price_level. If the unit price is smaller than 35 dollars, the level is low, and if the unit price is between 35 dollars and 70 dollars, it belongs to middle level, and higher than 70 belongs to high level. I want to see the effect of this new variable on the quantities.
+I divided the unit price into three levels and created the new variable called unit_price_level. If the unit price is smaller than 35 dollars, the level is low, and if the unit price is between 35 dollars and 70 dollars, it belongs to middle level, and higher than 70 belongs to high level. I want to see the effect of this new variable on the quantities. 
+
 
 ```{r unit_price_level}
 price_level <- function(df) {
