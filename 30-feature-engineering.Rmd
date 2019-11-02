@@ -64,7 +64,18 @@ Doing the `assert()` function, we need to test whether new variables (numeric) a
 
 ```{r gross_income_per_item}
 
+gross_item <- function(df) {
+  if (!all(c("quantity", "gross_income") %in% names(df))) {
+    stop("data must contain 'quantity' and 'gross_income'")
+  }
+  df <- df %>% 
+    mutate(gross_income_per_item = gross_income/quantity)
+}
 
+supermarket %>% 
+  gross_item() %>% 
+  select(gross_income_per_item, gross_income, quantity, everything()) %>% 
+  assert(within_bounds(0, 100), gross_income_per_item)
 ```
 
 
